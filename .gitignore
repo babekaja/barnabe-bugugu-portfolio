@@ -1,0 +1,34 @@
+# Dependencies
+/node_modules
+
+# Angular build
+/dist
+/.angular
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local archives
+*.zip
+
+# Automatic conflict copies
+README 01.*.md
+angular 01.*.json
+package 01.*.json
+package-lock 01.*.json
+public 01.*/
+src 01.*/
+tsconfig 01.*.json

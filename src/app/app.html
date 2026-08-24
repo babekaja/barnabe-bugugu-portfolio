@@ -1,0 +1,524 @@
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<div class="page-shell">
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="brand" type="button" (click)="scrollTo('accueil')" aria-label="Retour à l'accueil">
+        <span class="brand-mark">BB</span>
+        <span class="brand-name">Barnabé Bugugu</span>
+      </button>
+
+      <nav class="desktop-nav" aria-label="Navigation principale">
+        @for (item of navItems; track item.id) {
+          <button
+            type="button"
+            class="nav-link"
+            [class.active]="activeSection() === item.id"
+            [attr.aria-current]="activeSection() === item.id ? 'page' : null"
+            (click)="scrollTo(item.id)"
+          >
+            {{ item.label }}
+          </button>
+        }
+      </nav>
+
+      <div class="header-actions">
+        <button
+          class="icon-button"
+          type="button"
+          (click)="toggleTheme()"
+          [attr.aria-label]="darkMode() ? 'Activer le thème clair' : 'Activer le thème sombre'"
+        >
+          @if (darkMode()) {
+            <svg lucideSun aria-hidden="true"></svg>
+          } @else {
+            <svg lucideMoon aria-hidden="true"></svg>
+          }
+        </button>
+
+        <button
+          class="icon-button menu-button"
+          type="button"
+          (click)="toggleMenu()"
+          [attr.aria-expanded]="mobileMenuOpen()"
+          aria-controls="mobile-navigation"
+          aria-label="Ouvrir le menu"
+        >
+          @if (mobileMenuOpen()) {
+            <svg lucideX aria-hidden="true"></svg>
+          } @else {
+            <svg lucideMenu aria-hidden="true"></svg>
+          }
+        </button>
+      </div>
+    </div>
+
+    @if (mobileMenuOpen()) {
+      <div class="mobile-nav-wrap" id="mobile-navigation">
+        <nav class="mobile-nav container" aria-label="Navigation mobile">
+          @for (item of navItems; track item.id) {
+            <button type="button" (click)="scrollTo(item.id)">
+              <span>{{ item.label }}</span>
+              <svg lucideChevronRight aria-hidden="true"></svg>
+            </button>
+          }
+        </nav>
+      </div>
+    }
+  </header>
+
+  <main id="contenu">
+    <section id="accueil" class="hero section-anchor">
+      <div class="container hero-layout">
+        <div class="hero-main">
+          <div class="availability-line">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>{{ profile.availability }}</span>
+          </div>
+
+          <p class="hero-kicker">Développeur logiciel · Bukavu</p>
+          <h1>Je construis des produits numériques utiles.</h1>
+          <p class="hero-lead">
+            {{ profile.headline }}. Des interfaces mobiles aux API, en passant par l’IA et les prototypes connectés.
+          </p>
+
+          <div class="hero-actions">
+            <button class="button button-primary" type="button" (click)="scrollTo('projets')">
+              Explorer mes projets
+              <svg lucideArrowUpRight aria-hidden="true"></svg>
+            </button>
+            <a class="button button-secondary" href="/cv-barnabe-bugugu.pdf" download="CV-Barnabe-Bugugu.pdf">
+              Télécharger le CV
+              <svg lucideDownload aria-hidden="true"></svg>
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-aside" aria-label="Profil professionnel">
+          <figure class="hero-portrait">
+            <img
+              src="/images/portrait-barnabe-bugugu.webp"
+              alt="Portrait de Barnabé Bugugu dans un environnement verdoyant"
+              width="1080"
+              height="1440"
+              fetchpriority="high"
+            />
+            <figcaption>
+              <span aria-hidden="true"></span>
+              Barnabé Bugugu · Bukavu, RDC
+            </figcaption>
+          </figure>
+
+          <div class="aside-block">
+            <span class="aside-label">Profil</span>
+            <strong>{{ profile.name }}</strong>
+            <p>{{ profile.role }}</p>
+          </div>
+
+          <dl class="profile-facts">
+            <div>
+              <dt>Basé à</dt>
+              <dd>{{ profile.location }}</dd>
+            </div>
+            <div>
+              <dt>Travaille surtout avec</dt>
+              <dd>Kotlin, Python, Angular, FastAPI</dd>
+            </div>
+            <div>
+              <dt>Domaines</dt>
+              <dd>Éducation, outils métiers, IA, IoT</dd>
+            </div>
+          </dl>
+
+          <div class="social-links" aria-label="Réseaux et contact">
+            @for (social of socials; track social.label) {
+              <a [href]="social.url" target="_blank" rel="noreferrer">
+                <span>{{ social.label }}</span>
+                <svg lucideArrowUpRight aria-hidden="true"></svg>
+              </a>
+            }
+          </div>
+        </aside>
+      </div>
+
+      <div class="container focus-strip" aria-label="Domaines techniques principaux">
+        @for (stat of stats; track stat.value; let i = $index) {
+          <div class="focus-item">
+            <span>0{{ i + 1 }}</span>
+            <div>
+              <strong>{{ stat.value }}</strong>
+              <small>{{ stat.label }}</small>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section id="apropos" class="section section-anchor">
+      <div class="container split-section">
+        <header class="section-rail">
+          <span class="section-index">01</span>
+          <p class="section-kicker">À propos</p>
+          <h2>Du code, mais surtout des problèmes concrets à résoudre.</h2>
+        </header>
+
+        <div class="about-content">
+          <div class="about-prose">
+            @for (paragraph of profile.about; track paragraph) {
+              <p>{{ paragraph }}</p>
+            }
+          </div>
+
+          <div class="principles-list" aria-label="Principes de travail">
+            <div>
+              <span>01</span>
+              <div>
+                <strong>Comprendre avant de construire</strong>
+                <p>Clarifier l’usage, les contraintes et les personnes concernées avant de choisir une solution technique.</p>
+              </div>
+            </div>
+            <div>
+              <span>02</span>
+              <div>
+                <strong>Faire simple quand c’est possible</strong>
+                <p>Privilégier une architecture lisible, des interfaces compréhensibles et une maintenance réaliste.</p>
+              </div>
+            </div>
+            <div>
+              <span>03</span>
+              <div>
+                <strong>Concevoir pour le contexte réel</strong>
+                <p>Tenir compte des usages mobiles, de la connectivité et des besoins locaux plutôt que suivre un effet de mode.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="competences" class="section section-anchor section-tinted">
+      <div class="container">
+        <header class="wide-heading">
+          <div>
+            <span class="section-index">02</span>
+            <p class="section-kicker">Compétences</p>
+            <h2>Une stack choisie pour livrer des produits maintenables.</h2>
+          </div>
+          <p>Je travaille du mobile au backend, avec une attention particulière aux données, aux API et aux usages concrets de l’IA.</p>
+        </header>
+
+        <div class="skills-table">
+          @for (group of skills; track group.title; let i = $index) {
+            <article class="skill-row">
+              <span class="row-number">0{{ i + 1 }}</span>
+              <div class="skill-name">
+                @switch (group.icon) {
+                  @case ('code') { <svg lucideCode aria-hidden="true"></svg> }
+                  @case ('smartphone') { <svg lucideSmartphone aria-hidden="true"></svg> }
+                  @case ('database') { <svg lucideDatabase aria-hidden="true"></svg> }
+                  @case ('brain') { <svg lucideBrain aria-hidden="true"></svg> }
+                }
+                <h3>{{ group.title }}</h3>
+              </div>
+              <ul class="skill-values">
+                @for (skill of group.skills; track skill) {
+                  <li>{{ skill }}</li>
+                }
+              </ul>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="projets" class="section section-anchor projects-section">
+      <div class="container">
+        <header class="wide-heading projects-heading">
+          <div>
+            <span class="section-index">03</span>
+            <p class="section-kicker">Projets</p>
+            <h2>Quelques produits sur lesquels j’ai travaillé.</h2>
+          </div>
+          <p>Mobile, web, IA et IoT : chaque projet répond à un besoin différent, avec une stack adaptée au contexte.</p>
+        </header>
+
+        <div class="project-toolbar">
+          <span>{{ filteredProjects().length }} projet{{ filteredProjects().length > 1 ? 's' : '' }}</span>
+          <div class="filters" aria-label="Filtrer les projets">
+            @for (category of categories; track category) {
+              <button
+                type="button"
+                [class.active]="selectedCategory() === category"
+                [attr.aria-pressed]="selectedCategory() === category"
+                (click)="selectCategory(category)"
+              >
+                {{ category }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="project-list">
+          @for (project of filteredProjects(); track project.title; let i = $index) {
+            <article class="project-row">
+              <div class="project-index">{{ (i + 1).toString().padStart(2, '0') }}</div>
+              <div class="project-primary">
+                <div class="project-title-line">
+                  <div>
+                    <span class="project-category">{{ project.category }}</span>
+                    <h3>{{ project.title }}</h3>
+                  </div>
+                  @if (project.liveUrl) {
+                    <a [href]="project.liveUrl" target="_blank" rel="noreferrer" [attr.aria-label]="'Ouvrir ' + project.title + ' en ligne'">
+                      <span>Voir en ligne</span>
+                      <svg lucideExternalLink aria-hidden="true"></svg>
+                    </a>
+                  }
+                </div>
+
+                @if (project.meta) {
+                  <p class="project-meta">{{ project.meta }}</p>
+                }
+                <p class="project-description">{{ project.description }}</p>
+              </div>
+
+              <ul class="project-stack" aria-label="Technologies utilisées">
+                @for (tag of project.tags; track tag) {
+                  <li>{{ tag }}</li>
+                }
+              </ul>
+
+              @if (project.images?.length) {
+                <div class="project-gallery" [attr.aria-label]="'Captures de ' + project.title">
+                  @for (image of project.images; track image.src) {
+                    <a
+                      class="project-shot"
+                      [href]="image.src"
+                      target="_blank"
+                      rel="noreferrer"
+                      [attr.aria-label]="'Voir la capture ' + (image.label || project.title) + ' en grand'"
+                    >
+                      <img
+                        [src]="image.src"
+                        [alt]="image.alt"
+                        loading="lazy"
+                        decoding="async"
+                        width="944"
+                        height="2048"
+                      />
+                      @if (image.label) {
+                        <span>{{ image.label }}</span>
+                      }
+                    </a>
+                  }
+                </div>
+              }
+            </article>
+          } @empty {
+            <div class="empty-state">
+              <strong>Aucun projet dans cette catégorie.</strong>
+              <p>Choisis une autre catégorie pour explorer le reste du portfolio.</p>
+              <button type="button" class="text-button" (click)="selectCategory('Tous')">Afficher tous les projets</button>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="parcours" class="section section-anchor section-tinted">
+      <div class="container split-section">
+        <header class="section-rail">
+          <span class="section-index">04</span>
+          <p class="section-kicker">Parcours</p>
+          <h2>Apprendre, construire, puis transmettre.</h2>
+          <p class="rail-support">Un parcours qui relie développement logiciel, expérience technique et engagement communautaire.</p>
+        </header>
+
+        <div class="journey-content">
+          <section class="journey-group" aria-labelledby="experience-title">
+            <div class="journey-group-head">
+              <span>Expérience</span>
+              <h3 id="experience-title">Terrain & communauté</h3>
+            </div>
+            <div class="journey-list">
+              @for (experience of experiences; track experience.role) {
+                <article class="journey-row">
+                  <span class="journey-period">{{ experience.period }}</span>
+                  <div>
+                    <h4>{{ experience.role }}</h4>
+                    <strong>{{ experience.organization }}</strong>
+                    <p>{{ experience.description }}</p>
+                    <ul class="inline-tags">
+                      @for (tag of experience.tags; track tag) {
+                        <li>{{ tag }}</li>
+                      }
+                    </ul>
+                  </div>
+                </article>
+              }
+            </div>
+          </section>
+
+          <section class="journey-group" aria-labelledby="education-title">
+            <div class="journey-group-head">
+              <span>Formation</span>
+              <h3 id="education-title">Parcours académique</h3>
+            </div>
+            <div class="journey-list">
+              @for (item of education; track item.title) {
+                <article class="journey-row">
+                  <span class="journey-period">{{ item.period }}</span>
+                  <div>
+                    <h4>{{ item.title }}</h4>
+                    <strong>{{ item.institution }}</strong>
+                    <small>{{ item.location }}</small>
+                    @if (item.detail) {
+                      <p>{{ item.detail }}</p>
+                    }
+                  </div>
+                </article>
+              }
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications" class="section section-anchor">
+      <div class="container">
+        <header class="wide-heading">
+          <div>
+            <span class="section-index">05</span>
+            <p class="section-kicker">Formation continue</p>
+            <h2>Certifications, langues et engagement.</h2>
+          </div>
+          <p>Une progression technique continue, complétée par le mentorat et une ouverture aux enjeux sociaux de la région.</p>
+        </header>
+
+        <div class="credentials-layout">
+          <section class="certification-list" aria-label="Certifications">
+            @for (certification of certifications; track certification.title; let i = $index) {
+              <article class="certification-row">
+                <span>{{ (i + 1).toString().padStart(2, '0') }}</span>
+                <div>
+                  <h3>{{ certification.title }}</h3>
+                  <p>{{ certification.issuer }}</p>
+                  @if (certification.detail) {
+                    <small>{{ certification.detail }}</small>
+                  }
+                </div>
+              </article>
+            }
+          </section>
+
+          <aside class="credentials-aside">
+            <section>
+              <div class="aside-heading">
+                <span>Langues</span>
+                <h3>Communication</h3>
+              </div>
+              <div class="language-list">
+                @for (language of languages; track language.language) {
+                  <div class="language-row">
+                    <div>
+                      <strong>{{ language.language }}</strong>
+                      <span>{{ language.label }}</span>
+                    </div>
+                    <div class="level-bar" [attr.aria-label]="language.level + ' sur 5'">
+                      @for (dot of [1, 2, 3, 4, 5]; track dot) {
+                        <span [class.active]="dot <= language.level"></span>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </section>
+
+            <section>
+              <div class="aside-heading">
+                <span>Engagement</span>
+                <h3>Au-delà du code</h3>
+              </div>
+              <div class="engagement-list">
+                @for (engagement of engagements; track engagement.title) {
+                  <article>
+                    <h4>{{ engagement.title }}</h4>
+                    <strong>{{ engagement.organization }}</strong>
+                    <p>{{ engagement.description }}</p>
+                  </article>
+                }
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-anchor contact-section">
+      <div class="container contact-layout">
+        <div class="contact-intro">
+          <span class="section-index">06</span>
+          <p class="section-kicker">Contact</p>
+          <h2>Un projet, une collaboration ou une question technique ?</h2>
+          <p>Explique-moi le contexte et ce que tu veux construire. Le formulaire prépare un email dans ton application de messagerie.</p>
+
+          <div class="contact-details">
+            <a [href]="'mailto:' + profile.email">
+              <span>Email</span>
+              <strong>{{ profile.email }}</strong>
+              <svg lucideArrowUpRight aria-hidden="true"></svg>
+            </a>
+            <div>
+              <span>Localisation</span>
+              <strong>{{ profile.location }}</strong>
+              <svg lucideMapPin aria-hidden="true"></svg>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form" (submit)="sendMessage($event)">
+          <div class="form-row">
+            <label>
+              <span>Nom</span>
+              <input name="name" type="text" autocomplete="name" placeholder="Votre nom" required>
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" placeholder="vous@exemple.com" required>
+            </label>
+          </div>
+          <label>
+            <span>Sujet</span>
+            <input name="subject" type="text" placeholder="Projet / collaboration" required>
+          </label>
+          <label>
+            <span>Message</span>
+            <textarea name="message" rows="6" placeholder="Décrivez brièvement votre besoin..." required></textarea>
+          </label>
+          <button class="button button-primary form-submit" type="submit">
+            Préparer l’email
+            <svg lucideSend aria-hidden="true"></svg>
+          </button>
+          <small class="form-note">Aucune donnée n’est envoyée à un serveur depuis ce formulaire.</small>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-signature">
+        <span class="brand-mark">BB</span>
+        <div>
+          <strong>Barnabé Bugugu</strong>
+          <p>Développement logiciel · Bukavu, RDC</p>
+        </div>
+      </div>
+      <p class="copyright">© {{ year }} · Construit avec Angular.</p>
+      <button class="back-to-top" type="button" (click)="scrollTo('accueil')">
+        Haut de page
+        <svg lucideArrowUpRight aria-hidden="true"></svg>
+      </button>
+    </div>
+  </footer>
+</div>

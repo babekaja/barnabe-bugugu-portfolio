@@ -1,0 +1,125 @@
+:root {
+  color-scheme: light;
+  --font-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+  --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+
+  --background: #f4f2eb;
+  --surface: #fbfaf6;
+  --surface-muted: #eae7dc;
+  --foreground: #171916;
+  --foreground-muted: #61645d;
+  --foreground-faint: #888b83;
+  --primary: #245b43;
+  --primary-hover: #183f2f;
+  --primary-contrast: #f7f8f3;
+  --accent: #cbe96f;
+  --border: #d6d3c9;
+  --border-strong: #a8aaa2;
+  --success: #2b714f;
+  --danger: #a33b35;
+  --focus: #2d6bff;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --container: 1200px;
+  --header-height: 68px;
+  --transition-fast: 160ms ease;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --background: #11130f;
+  --surface: #171a15;
+  --surface-muted: #1e221c;
+  --foreground: #f0efe8;
+  --foreground-muted: #a8aba2;
+  --foreground-faint: #777b73;
+  --primary: #b9d96a;
+  --primary-hover: #d0ee80;
+  --primary-contrast: #11150e;
+  --accent: #b9d96a;
+  --border: #30342d;
+  --border-strong: #51564d;
+  --success: #8bc99f;
+  --danger: #e2877f;
+  --focus: #84a9ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: var(--font-body);
+  color: var(--foreground);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  color: inherit;
+}
+
+::selection {
+  color: var(--primary-contrast);
+  background: var(--primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
