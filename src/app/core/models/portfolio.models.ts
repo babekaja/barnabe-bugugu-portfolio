@@ -24,6 +24,7 @@ export interface Project {
   category: ProjectCategory;
   tags: string[];
   liveUrl?: string;
+  videoUrl?: string;
   sourceUrl?: string;
   featured?: boolean;
   meta?: string;

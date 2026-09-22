@@ -77,9 +77,9 @@
           </div>
 
           <p class="hero-kicker">Développeur logiciel · Bukavu</p>
-          <h1>Je construis des produits numériques utiles.</h1>
+          <h1>Je conçois des outils numériques utiles.</h1>
           <p class="hero-lead">
-            {{ profile.headline }}. Des interfaces mobiles aux API, en passant par l’IA et les prototypes connectés.
+            Kotlin, Python et Angular sont mes outils du quotidien. Je passe du mobile au backend selon les besoins du projet.
           </p>
 
           <div class="hero-actions">
@@ -260,7 +260,7 @@
 
         <div class="project-list">
           @for (project of filteredProjects(); track project.title; let i = $index) {
-            <article class="project-row">
+            <article class="project-row" [class.has-live-preview]="project.liveUrl && project.category === 'Web'">
               <div class="project-index">{{ (i + 1).toString().padStart(2, '0') }}</div>
               <div class="project-primary">
                 <div class="project-title-line">
@@ -269,10 +269,21 @@
                     <h3>{{ project.title }}</h3>
                   </div>
                   @if (project.liveUrl) {
-                    <a [href]="project.liveUrl" target="_blank" rel="noreferrer" [attr.aria-label]="'Ouvrir ' + project.title + ' en ligne'">
-                      <span>Voir en ligne</span>
-                      <svg lucideExternalLink aria-hidden="true"></svg>
-                    </a>
+                    <div class="project-links">
+                      <button class="preview-button" type="button" (click)="openPreview(project)" [attr.aria-label]="'Afficher ' + project.title + ' dans un aperçu intégré'">
+                        <span>Aperçu</span>
+                      </button>
+                      <a [href]="project.liveUrl" target="_blank" rel="noreferrer" [attr.aria-label]="'Ouvrir ' + project.title + ' en ligne'">
+                        <span>Voir en ligne</span>
+                        <svg lucideExternalLink aria-hidden="true"></svg>
+                      </a>
+                      @if (project.videoUrl) {
+                        <a [href]="project.videoUrl" target="_blank" rel="noreferrer" [attr.aria-label]="'Voir la démonstration vidéo de ' + project.title">
+                          <span>Voir la démo</span>
+                          <svg lucideExternalLink aria-hidden="true"></svg>
+                        </a>
+                      }
+                    </div>
                   }
                 </div>
 
@@ -287,6 +298,24 @@
                   <li>{{ tag }}</li>
                 }
               </ul>
+
+              @if (project.liveUrl && project.category === 'Web') {
+                <button class="project-live-preview" type="button" (click)="openPreview(project)" [attr.aria-label]="'Ouvrir l’aperçu interactif de ' + project.title">
+                  <span class="preview-browser-bar" aria-hidden="true">
+                    <i></i><i></i><i></i>
+                    <span>{{ project.liveUrl }}</span>
+                    <b>↗</b>
+                  </span>
+                  <span class="preview-browser-screen" aria-hidden="true">
+                    <iframe [src]="safePreviewUrl(project.liveUrl)" tabindex="-1" loading="lazy" [title]="'Aperçu visuel de ' + project.title"></iframe>
+                    <span class="preview-browser-overlay">
+                      <span>Explorer le site</span>
+                      <svg lucideArrowUpRight aria-hidden="true"></svg>
+                    </span>
+                  </span>
+                  <span class="preview-browser-caption"><strong>APERÇU DU SITE</strong><span>Cliquez pour parcourir le projet</span></span>
+                </button>
+              }
 
               @if (project.images?.length) {
                 <div class="project-gallery" [attr.aria-label]="'Captures de ' + project.title">
@@ -504,6 +533,25 @@
       </div>
     </section>
   </main>
+
+  @if (previewProject(); as preview) {
+    <div class="preview-backdrop" (click)="closePreview()">
+      <section class="preview-dialog" role="dialog" aria-modal="true" [attr.aria-label]="'Aperçu du site ' + preview.title" (click)="$event.stopPropagation()">
+        <header class="preview-header">
+          <div>
+            <span>Aperçu du projet</span>
+            <h2>{{ preview.title }}</h2>
+          </div>
+          <div class="preview-actions">
+            <a [href]="preview.url" target="_blank" rel="noreferrer">Ouvrir dans un nouvel onglet <svg lucideExternalLink aria-hidden="true"></svg></a>
+            <button class="preview-close" type="button" (click)="closePreview()" aria-label="Fermer l’aperçu"><svg lucideX aria-hidden="true"></svg></button>
+          </div>
+        </header>
+        <iframe class="preview-frame" [src]="preview.safeUrl" [title]="'Site web ' + preview.title" loading="lazy" allow="fullscreen"></iframe>
+        <p class="preview-note">Si le site ne s’affiche pas ici, ouvre-le dans un nouvel onglet.</p>
+      </section>
+    </div>
+  }
 
   <footer class="site-footer">
     <div class="container footer-inner">

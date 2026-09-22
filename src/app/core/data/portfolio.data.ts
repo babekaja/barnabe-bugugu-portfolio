@@ -24,10 +24,10 @@ export const PROFILE = {
     'Je conçois des solutions numériques utiles dans l’éducation, l’inclusion numérique et le développement communautaire, du mobile au backend jusqu’aux prototypes IA/IoT.',
   location: 'Bukavu, RDC · Région des Grands Lacs',
   email: 'mukozi.kajabika@ucbukavu.ac.cd',
-  availability: 'Ouvert aux collaborations, projets et opportunités',
+  availability: 'Disponible pour des projets et collaborations',
   about: [
-    'Étudiant en Informatique à l’Université Catholique de Bukavu, je développe des applications mobiles et des services backend avec une forte orientation produit. Je travaille principalement avec Kotlin, Jetpack Compose, Python, FastAPI, les API REST et les bases de données modernes.',
-    'Mentor au sein de GDG on Campus UCB, j’aime partager mes connaissances et accompagner d’autres jeunes développeurs. Je poursuis aussi une formation en Paix, Cohésion Sociale et Accès à la Justice au Pole Institute, ce qui nourrit mon intérêt pour les technologies à impact social dans la région des Grands Lacs.',
+    'Étudiant en informatique à l’Université Catholique de Bukavu, je conçois des applications mobiles et des services backend en partant des besoins concrets des utilisateurs. Je travaille principalement avec Kotlin, Jetpack Compose, Python, FastAPI, les API REST et les bases de données.',
+    'En parallèle de mes études, je suis mentor au GDG on Campus UCB. J’aime apprendre avec d’autres développeurs, partager ce que je découvre et contribuer à des projets utiles.',
   ],
 };
 
@@ -101,10 +101,21 @@ export const PROJECTS: Project[] = [
   {
     title: 'KivuTech Entrepreneur Hub',
     description:
-      'Plateforme de gestion d’incubation pour suivre startups, candidatures, mentorat, sessions, progression et indicateurs de performance.',
+      'Site web de KivuTech, un écosystème qui accompagne les entrepreneurs, startups et PME en RDC à travers l’incubation, la formation, le mentorat, l’innovation et le réseautage. Réalisé dans le cadre de mon stage chez KivuTech.',
     category: 'Web',
-    tags: ['Angular', 'Supabase', 'PostgreSQL', 'RLS'],
+    tags: ['Angular', 'Web', 'Entrepreneuriat'],
     featured: true,
+    liveUrl: 'https://kivutechbgg.vercel.app/',
+    meta: 'Stage informatique · KivuTech · 2026',
+  },
+  {
+    title: 'BK Solutions Market',
+    description:
+      'Marketplace de commerce général conçue pour présenter un catalogue de produits en RDC. Le site propose la navigation par catégories, la recherche et les filtres, les promotions, des fiches produit détaillées et un parcours panier/commande.',
+    category: 'Web',
+    tags: ['Angular', 'Marketplace', 'E-commerce'],
+    liveUrl: 'https://bk-market-1brd.vercel.app/',
+    meta: 'Marketplace · Commerce général en RDC',
   },
   {
     title: 'UhakiLearn',
@@ -178,9 +189,12 @@ export const PROJECTS: Project[] = [
   {
     title: 'iPresence UCB',
     description:
-      'Solution de présence universitaire pensée autour du mobile, de la détection de proximité et d’un suivi administratif simplifié.',
-    category: 'Mobile',
-    tags: ['Kotlin', 'Compose', 'BLE', 'QR'],
+      'Système de gestion de présence universitaire par QR code : l’enseignant projette un code que les étudiants scannent pour enregistrer leur présence au cours.',
+    category: 'Web',
+    tags: ['QR Code', 'Présence universitaire', 'Web'],
+    liveUrl: 'https://ipressence-web2.vercel.app/',
+    videoUrl: 'https://youtu.be/FN1M81uM0DU',
+    meta: 'Projet tutoré · Gestion de présence des étudiants',
   },
   {
     title: 'Assistant NLP',

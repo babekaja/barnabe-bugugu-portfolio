@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://barnabe-bugugu-portfolio.vercel.app/sitemap.xml

@@ -6,6 +6,7 @@ import {
   computed,
   signal,
 } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import {
   LucideArrowUpRight,
   LucideBrain,
@@ -83,6 +84,7 @@ export class App implements AfterViewInit, OnDestroy {
 
   readonly categories: Array<'Tous' | ProjectCategory> = ['Tous', 'Web', 'Mobile', 'IA', 'IoT'];
   readonly selectedCategory = signal<'Tous' | ProjectCategory>('Tous');
+  readonly previewProject = signal<{ title: string; url: string; safeUrl: SafeResourceUrl } | null>(null);
   readonly mobileMenuOpen = signal(false);
   readonly darkMode = signal(false);
   readonly activeSection = signal('accueil');
@@ -97,7 +99,7 @@ export class App implements AfterViewInit, OnDestroy {
 
   private observer?: IntersectionObserver;
 
-  constructor() {
+  constructor(private readonly sanitizer: DomSanitizer) {
     const storedTheme = localStorage.getItem('portfolio-theme');
     const systemPrefersDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
     const isDark = storedTheme ? storedTheme === 'dark' : systemPrefersDark;
@@ -156,6 +158,22 @@ export class App implements AfterViewInit, OnDestroy {
 
   selectCategory(category: 'Tous' | ProjectCategory): void {
     this.selectedCategory.set(category);
+  }
+
+  openPreview(project: { title: string; liveUrl?: string }): void {
+    if (project.liveUrl) this.previewProject.set({
+      title: project.title,
+      url: project.liveUrl,
+      safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl(project.liveUrl),
+    });
+  }
+
+  closePreview(): void {
+    this.previewProject.set(null);
+  }
+
+  safePreviewUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   scrollTo(sectionId: string): void {
